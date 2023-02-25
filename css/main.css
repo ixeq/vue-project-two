@@ -1,0 +1,15 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+h1{
+    text-align: center;
+}
+.cards_inner{
+    display: flex;
+    justify-content: space-around;
+    margin: 5em;
+}
+.form_create{
+    text-align: center;
+}
