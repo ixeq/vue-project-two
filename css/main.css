@@ -10,6 +10,53 @@ h1{
     justify-content: space-around;
     margin: 5em;
 }
+.cards_item{
+    width: 33%;
+    text-align: center;
+}
 .form_create{
     text-align: center;
+    width: 550px;
+    margin: 0 auto;
+}
+li{
+    border: 2px solid cadetblue;
+    display: flex;
+    justify-content: space-around;
+    padding: .5em 2rem;
+    margin: 1rem;
+    border-radius: 1em;
+}
+.column_div{
+    border: 2px solid cadetblue;
+    width: 50%;
+    margin: 2rem auto;
+}
+.doneInput{
+    background-color: greenyellow;
+
+}
+.done{
+    text-decoration: line-through
+}
+.form_div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1em;
+}
+label{
+    margin: 0 2em;
+}
+.form_input{
+    border: 2px solid cadetblue;
+    border-radius: 1em;
+    padding: 5px 10px;
+}
+.fort_submit{
+    border: 2px solid cadetblue;
+    background-color: cadetblue;
+    color: white;
+    border-radius: 1em;
+    padding: 5px 10px;
 }
