@@ -6,16 +6,16 @@ Vue.component('Cards', {
        <create_card></create_card>
            <div class="cards_inner">
                 <div class="cards_item">
+                    <h2 id="h2_one">Новые</h2>
                     <columns1 :columnFirst="columnFirst"></columns1>
-                    <h2>Новые</h2>
                 </div>
                 <div class="cards_item">
+                <h2 id="h2_two">В процессе</h2>
                     <columns2 :columnSecond="columnSecond"></columns2>
-                <h2>В процессе</h2>
                 </div>
                 <div class="cards_item">
+                <h2 id="h2_three">Завершенные</h2>
                     <columns3 :columnThird="columnThird"></columns3>
-                <h2>Завершенные</h2>
                 </div>
            </div>
        </div>`,
@@ -171,30 +171,30 @@ Vue.component('create_card', {
     template: `
 
     <form @submit.prevent="createCard">
-    <p class="form_create">
+    <div class="form_create">
          <label for="name">Добавить заметку:</label>
-        <input required class="form_input" id="task" v-model="name" placeholder="task"/>
+        <input class="form_input" id="task" v-model="name" placeholder="task"/>
         <hr>
-         <p >
+         <div>
              <label for="name">Добавить задачу:</label>
-             <input required class="form_div" id="task1" v-model="name1" placeholder="task"/>
-         </p>
-         <p class="form_div">
+             <input class="form_input" id="task1" v-model="name1" placeholder="task"/>
+         </div>
+         <div class="form_div">
              <label for="name">Добавить задачу:</label>
              <input  class="form_input" id="task2" v-model="name2" placeholder="task"/>
-         </p>
-         <p class="form_div">
+         </div>
+         <div class="form_div">
              <label for="name">Добавить задачу:</label>
              <input class="form_input" id="task3" v-model="name3" placeholder="task"/>
-         </p>
-         <p class="form_div">
+         </div>
+         <div class="form_div">
              <label for="name">Добавить задачу:</label>
              <input class="form_input" id="task4" v-model="name4" placeholder="task">
-         </p>
-         <p class="form_div">
+         </div>
+         <div class="form_div">
              <label for="name">Добавить задачу:</label>
              <input class="form_input" id="task5" v-model="name5" placeholder="task">
-         </p>
+         </div>
 <!--        <input @click="createCard" class="ford_submit" type="button" value="Добавить">-->
         <button class="ford_submit">Добавить</button>
 
