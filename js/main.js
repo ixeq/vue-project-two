@@ -1,4 +1,3 @@
-let eventBusTwo = new Vue()
 let eventBus = new Vue()
 Vue.component('Cards', {
     template: `
@@ -33,7 +32,7 @@ Vue.component('Cards', {
                 this.columnFirst.push(card)
             }
         })
-        eventBusTwo.$on('addColumnSecond', card => {
+        eventBus.$on('addColumnSecond', card => {
             if(this.columnSecond.length < 5){
                 this.columnSecond.push(card)
                 this.columnFirst.splice(this.columnFirst.indexOf(card), 1)
@@ -73,7 +72,6 @@ Vue.component('Columns1', {
     props: {
         columnFirst:{
             type: Array,
-            required: false
 
         }
 
@@ -120,7 +118,6 @@ Vue.component('Columns2', {
     props: {
         columnSecond:{
             type: Array,
-            required: false
 
         }
 
@@ -162,7 +159,6 @@ Vue.component('Columns3', {
     props: {
         columnThird:{
             type: Array,
-            required: false
 
         }
 
@@ -174,33 +170,33 @@ Vue.component('Columns3', {
 Vue.component('create_card', {
     template: `
 
-    <form>
-    <div class="form_create">
+    <form @submit.prevent="createCard">
+    <p class="form_create">
          <label for="name">Добавить заметку:</label>
-        <input class="form_input" id="task" v-model="name" placeholder="task">
+        <input required class="form_input" id="task" v-model="name" placeholder="task"/>
         <hr>
-         <div class="form_div">
+         <p >
              <label for="name">Добавить задачу:</label>
-             <input class="form_input" id="task1" v-model="name1" placeholder="task">
-         </div>
-         <div class="form_div">
+             <input required class="form_div" id="task1" v-model="name1" placeholder="task"/>
+         </p>
+         <p class="form_div">
              <label for="name">Добавить задачу:</label>
-             <input class="form_input" id="task2" v-model="name2" placeholder="task">
-         </div>
-         <div class="form_div">
+             <input  class="form_input" id="task2" v-model="name2" placeholder="task"/>
+         </p>
+         <p class="form_div">
              <label for="name">Добавить задачу:</label>
-             <input class="form_input" id="task3" v-model="name3" placeholder="task">
-         </div>
-         <div class="form_div">
+             <input class="form_input" id="task3" v-model="name3" placeholder="task"/>
+         </p>
+         <p class="form_div">
              <label for="name">Добавить задачу:</label>
              <input class="form_input" id="task4" v-model="name4" placeholder="task">
-         </div>
-         <div class="form_div">
+         </p>
+         <p class="form_div">
              <label for="name">Добавить задачу:</label>
              <input class="form_input" id="task5" v-model="name5" placeholder="task">
-         </div>
+         </p>
 <!--        <input @click="createCard" class="ford_submit" type="button" value="Добавить">-->
-        <button @click="createCard" class="ford_submit" type="button" >Добавить</button>
+        <button class="ford_submit">Добавить</button>
 
      </div>
 
@@ -246,7 +242,7 @@ methods: {
     props: {
         columnFirst:{
             type: Array,
-            required: false
+            required: false,
 
         },
     },
