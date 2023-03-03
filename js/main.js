@@ -43,7 +43,7 @@ Vue.component('Cards', {
                 this.columnSecond.push(card)
                 this.columnFirst.splice(this.columnFirst.indexOf(card), 1)
             }else if (this.columnSecond.length === 5) {
-                this.errors.push('You need to complete card in the second column to add new card or complete card in the first column')
+                this.errors.push('Во второй колонке не должно быть больше 5-и карточек')
                 if(this.columnFirst.length > 0) {
                     this.columnFirst.forEach(item => {
                         item.arrTask.forEach(item => {
@@ -88,12 +88,14 @@ Vue.component('Columns1', {
                 <span>
                     <li v-for="task in card.arrTask" v-if="task.title != null" >
                             <strong>{{task.id}}</strong>
-                            <input type="checkbox" 
+                            <div  
+                            
                             :disabled="task.completed" 
-                            @change.prevent="updateColumn(card, task)"
+                            @click="updateColumn(card, task)"
                             
                             >
                             <span :class="{done: task.completed}" >{{task.title}}</span>
+                            </div>
                     </li>
                 </span>
             </div>
@@ -139,11 +141,12 @@ Vue.component('Columns2', {
                 <span>
                     <li v-for="task in card.arrTask" v-if="task.title != null" >
                             <strong>{{task.id}}</strong>
-                            <input type="checkbox"
+                            <div
                             :disabled="task.completed" 
-                            @change.prevent="updateColumnTwo(card, task)"
+                            @click="updateColumnTwo(card, task)"
                             >
                             <span :class="{done: task.completed}" >{{task.title}}</span>
+                            </div>
                     </li>
                 </span>
             </div>
@@ -181,10 +184,11 @@ Vue.component('Columns3', {
                 <span>
                     <li v-for="task in card.arrTask" v-if="task.title != null" >
                             <strong>{{task.id}}</strong>
-                            <input type="checkbox" 
+                            <div
                             :disabled="task.completed" 
                             >
                             <span :class="{done: task.completed}" >{{task.title}}</span>
+                            </div>
                     </li>
                     <p>Дата окончания: <br>{{card.data}}</p>
                     
