@@ -59,7 +59,7 @@ Vue.component('Columns1', {
                     <li v-for="task in column.arrTask" v-if="task.title != null" >
                             <strong>{{task.id}}</strong>
                             <input type="checkbox" 
-                            task.completed = "true" 
+                            v-on:change="task.completed = true"  
                             :disabled="task.completed" 
                             v-on:change="column.status += 1"
                             @change.prevent="updateColumn(column)">
@@ -104,8 +104,8 @@ Vue.component('Columns2', {
                 <span>
                     <li v-for="task in column.arrTask" v-if="task.title != null" >
                             <strong>{{task.id}}</strong>
-                            <input type="checkbox" 
-                            task.completed = "true" 
+                            <input type="checkbox"
+                            v-on:change="task.completed = true"  
                             :disabled="task.completed" 
                             v-on:change="column.status += 1"
                             @change.prevent="updateColumnTwo(column)"
@@ -173,19 +173,19 @@ Vue.component('create_card', {
     <form @submit.prevent="createCard">
     <div class="form_create">
          <label for="name">Добавить заметку:</label>
-        <input class="form_input" id="task" v-model="name" placeholder="task"/>
+        <input class="form_input" id="task" v-model="name" required placeholder="task"/>
         <hr>
          <div>
              <label for="name">Добавить задачу:</label>
-             <input class="form_input" id="task1" v-model="name1" placeholder="task"/>
+             <input class="form_input" id="task1" v-model="name1" required placeholder="task"/>
          </div>
          <div class="form_div">
              <label for="name">Добавить задачу:</label>
-             <input  class="form_input" id="task2" v-model="name2" placeholder="task"/>
+             <input  class="form_input" id="task2" v-model="name2" required placeholder="task"/>
          </div>
          <div class="form_div">
              <label for="name">Добавить задачу:</label>
-             <input class="form_input" id="task3" v-model="name3" placeholder="task"/>
+             <input class="form_input" id="task3" v-model="name3" required placeholder="task"/>
          </div>
          <div class="form_div">
              <label for="name">Добавить задачу:</label>
