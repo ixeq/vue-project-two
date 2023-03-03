@@ -61,3 +61,11 @@ label{
 input,select {
     margin-left: 10px;
 }
+.error {
+    padding: 20px 30px;
+    color: #cc0033;
+    font-size: 27px;
+    font-weight: bold;
+    line-height: 20px;
+    text-align: center;
+}

@@ -4,6 +4,7 @@ Vue.component('Cards', {
        <div class="Cards">
        <h1>Заметки</h1>
        <create_card></create_card>
+        <p class="error" v-for="error in errors">{{ error }}</p>
            <div class="cards_inner">
                 <div class="cards_item">
                     <h2 id="h2_one">Новые</h2>
@@ -24,18 +25,25 @@ Vue.component('Cards', {
             columnFirst:[],
             columnSecond:[],
             columnThird:[],
+            errors: []
         }
     },
     mounted() {
         eventBus.$on('card-submitted', card => {
+            this.errors = []
             if(this.columnFirst.length < 3){
                 this.columnFirst.push(card)
+            }else {
+                this.errors.push('В первой колонке нельзя добавить больше 3-х карточек.')
             }
         })
         eventBus.$on('addColumnSecond', card => {
+            this.errors = []
             if(this.columnSecond.length < 5){
                 this.columnSecond.push(card)
                 this.columnFirst.splice(this.columnFirst.indexOf(card), 1)
+            }else {
+                this.errors.push("Вы не можете редактировать первую колонку, пока есть во второй есть 5 карточек")
             }
         })
         eventBus.$on('addColumnThird', card =>{
@@ -43,8 +51,13 @@ Vue.component('Cards', {
             this.columnSecond.splice(this.columnSecond.indexOf(card), 1)
         })
         eventBus.$on('addColumnOneThird', card =>{
-            this.columnThird.push(card)
-            this.columnFirst.splice(this.columnFirst.indexOf(card), 1)
+
+            if (this.columnSecond.length >= 5) {
+                this.errors.push("Вы не можете редактировать первую колонку, пока есть во второй есть 5 карточек")
+            } else {
+                this.columnThird.push(card)
+                this.columnFirst.splice(this.columnFirst.indexOf(card), 1)
+            }
         })
 
     },
@@ -54,15 +67,15 @@ Vue.component('Cards', {
 Vue.component('Columns1', {
     template: `
        <div class="Column">
-            <div class="column_div" v-for="column in columnFirst"><h2>{{column.name}}</h2>
+            <div class="column_div" v-for="card in columnFirst"><h2>{{card.name}}</h2>
                 <span>
-                    <li v-for="task in column.arrTask" v-if="task.title != null" >
+                    <li v-for="task in card.arrTask" v-if="task.title != null" >
                             <strong>{{task.id}}</strong>
                             <input type="checkbox" 
-                            v-on:change="task.completed = true"  
                             :disabled="task.completed" 
-                            v-on:change="column.status += 1"
-                            @change.prevent="updateColumn(column)">
+                            @change.prevent="updateColumn(card, task)"
+                            
+                            >
                             <span :class="{done: task.completed}" >{{task.title}}</span>
                     </li>
                 </span>
@@ -73,18 +86,23 @@ Vue.component('Columns1', {
         columnFirst:{
             type: Array,
 
+        },
+        errors: {
+            type: Array,
         }
 
     },
     methods: {
-        updateColumn(card) {
+        updateColumn(card, task) {
+            card.status += 1
+            task.completed = true
             let cardTask = 0
             for(let i = 0; i < 5; i++){
                 if (card.arrTask[i].title != null) {
                     cardTask++
                 }
             }
-            if (((card.status / cardTask) * 100 >= 50) && (card.status / cardTask) * 100 != 100) {
+            if ((card.status / cardTask) * 100 >= 50) {
                 eventBus.$emit('addColumnSecond', card)
             }
             if ((card.status / cardTask) * 100 === 100) {
@@ -100,15 +118,13 @@ Vue.component('Columns1', {
 Vue.component('Columns2', {
     template: `
        <div class="Column">
-            <div class="column_div" v-for="column in columnSecond"><h2>{{column.name}}</h2>
+            <div class="column_div" v-for="card in columnSecond"><h2>{{card.name}}</h2>
                 <span>
-                    <li v-for="task in column.arrTask" v-if="task.title != null" >
+                    <li v-for="task in card.arrTask" v-if="task.title != null" >
                             <strong>{{task.id}}</strong>
                             <input type="checkbox"
-                            v-on:change="task.completed = true"  
                             :disabled="task.completed" 
-                            v-on:change="column.status += 1"
-                            @change.prevent="updateColumnTwo(column)"
+                            @change.prevent="updateColumnTwo(card, task)"
                             >
                             <span :class="{done: task.completed}" >{{task.title}}</span>
                     </li>
@@ -123,7 +139,9 @@ Vue.component('Columns2', {
 
     },
     methods: {
-        updateColumnTwo(card) {
+        updateColumnTwo(card, task) {
+            card.status += 1
+            task.completed = true
             let cardTask = 0
             for(let i = 0; i < 5; i++){
                 if (card.arrTask[i].title != null) {
@@ -142,16 +160,16 @@ Vue.component('Columns2', {
 Vue.component('Columns3', {
     template: `
        <div class="Column">
-            <div class="column_div" v-for="column in columnThird"><h2>{{column.name}}</h2>
+            <div class="column_div" v-for="card in columnThird"><h2>{{card.name}}</h2>
                 <span>
-                    <li v-for="task in column.arrTask" v-if="task.title != null" >
+                    <li v-for="task in card.arrTask" v-if="task.title != null" >
                             <strong>{{task.id}}</strong>
                             <input type="checkbox" 
                             :disabled="task.completed" 
                             >
                             <span :class="{done: task.completed}" >{{task.title}}</span>
                     </li>
-                    <p>Дата окончания: <br>{{column.data}}</p>
+                    <p>Дата окончания: <br>{{card.data}}</p>
                     
                 </span>
             </div>
@@ -210,7 +228,7 @@ Vue.component('create_card', {
             name3:null,
             name4:null,
             name5:null,
-
+            errors: [],
 
         }
     },
@@ -226,7 +244,8 @@ methods: {
                            {id: 5, title: this.name5, completed: false},
                 ],
                 data: null,
-                status: 0
+                status: 0,
+                errors: [],
             }
             eventBus.$emit('card-submitted', card)
             this.name = null
