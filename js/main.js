@@ -42,13 +42,30 @@ Vue.component('Cards', {
             if(this.columnSecond.length < 5){
                 this.columnSecond.push(card)
                 this.columnFirst.splice(this.columnFirst.indexOf(card), 1)
-            }else {
-                this.errors.push("Вы не можете редактировать первую колонку, пока есть во второй есть 5 карточек")
+            }else if (this.columnSecond.length === 5) {
+                this.errors.push('You need to complete card in the second column to add new card or complete card in the first column')
+                if(this.columnFirst.length > 0) {
+                    this.columnFirst.forEach(item => {
+                        item.arrTask.forEach(item => {
+                            item.completed = true;
+                        })
+                    })
+                }
             }
         })
         eventBus.$on('addColumnThird', card =>{
             this.columnThird.push(card)
             this.columnSecond.splice(this.columnSecond.indexOf(card), 1)
+
+        if(this.columnSecond.length < 5) {
+            if(this.columnFirst.length > 0) {
+                this.columnFirst.forEach(item => {
+                    item.arrTask.forEach(item => {
+                        item.completed = false;
+                    })
+                })
+            }
+        }
         })
         eventBus.$on('addColumnOneThird', card =>{
 
@@ -187,7 +204,6 @@ Vue.component('Columns3', {
 
 Vue.component('create_card', {
     template: `
-
     <form @submit.prevent="createCard">
     <div class="form_create">
          <label for="name">Добавить заметку:</label>
@@ -215,9 +231,7 @@ Vue.component('create_card', {
          </div>
 <!--        <input @click="createCard" class="ford_submit" type="button" value="Добавить">-->
         <button class="ford_submit">Добавить</button>
-
      </div>
-
        </form>
 `,
     data() {
@@ -233,15 +247,15 @@ Vue.component('create_card', {
         }
     },
 
-methods: {
+    methods: {
         createCard() {
             let card = {
                 name: this.name,
                 arrTask: [ {id: 1, title: this.name1, completed: false},
-                           {id: 2, title: this.name2, completed: false},
-                           {id: 3, title: this.name3, completed: false},
-                           {id: 4, title: this.name4, completed: false},
-                           {id: 5, title: this.name5, completed: false},
+                    {id: 2, title: this.name2, completed: false},
+                    {id: 3, title: this.name3, completed: false},
+                    {id: 4, title: this.name4, completed: false},
+                    {id: 5, title: this.name5, completed: false},
                 ],
                 data: null,
                 status: 0,
