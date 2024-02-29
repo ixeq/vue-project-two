@@ -206,8 +206,21 @@ Vue.component('Columns3', {
 
 })
 
-Vue.component('create_card', {
+Vue.component('modalWindow', {
     template: `
+<section>
+<div class="bu">
+    <a href="#openModal" class="btn btnModal">Создать карточку</a>
+</div>
+<div id="openModal" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Название</h3>
+        <a href="#close" title="Close" class="close">×</a>
+      </div>
+      <div class="modal-body">
+      
     <form @submit.prevent="createCard">
     <div class="form_create">
          <label for="name">Добавить заметку:</label>
@@ -237,6 +250,12 @@ Vue.component('create_card', {
         <button class="ford_submit">Добавить</button>
      </div>
        </form>
+       
+       </div>
+    </div>
+  </div>
+</div>
+</section>
 `,
     data() {
         return {
@@ -283,6 +302,15 @@ Vue.component('create_card', {
 
         },
     },
+})
+Vue.component('create_card', {
+    template: `
+<section id="main" class="main-alt">
+<div class="form__control">
+<modalWindow/>
+</div>
+</section>
+`,
 })
 
 let app = new Vue({
