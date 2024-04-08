@@ -131,9 +131,6 @@ Vue.component('Columns1', {
         errors: {
             type: Array,
         },
-        saveLocal: {
-            type: Function
-        }
 
     },
     methods: {
@@ -153,7 +150,6 @@ Vue.component('Columns1', {
                 card.data = new Date().toLocaleString()
                 eventBus.$emit('addColumnOneThird', card)
             }
-            this.saveLocal()
 
         },
     },
@@ -182,9 +178,6 @@ Vue.component('Columns2', {
             type: Array,
 
         },
-        saveLocal: {
-            type: Function
-        }
 
     },
     methods: {
@@ -201,7 +194,6 @@ Vue.component('Columns2', {
                 card.data = new Date().toLocaleString()
                 eventBus.$emit('addColumnThird', card)
             }
-            this.saveLocal()
 
         },
     }
@@ -325,14 +317,6 @@ Vue.component('modalWindow', {
             this.name3 = null
             this.name4 = null
             this.name5 = null
-            this.saveLocal()
-        },
-        saveLocal() {
-            localStorage.setItem('cards', JSON.stringify({
-                columnFirst: this.columnFirst,
-                columnSecond: this.columnSecond,
-                columnThird: this.columnThird,
-            }))
         },
     },
 
@@ -342,9 +326,6 @@ Vue.component('modalWindow', {
             required: false,
 
         },
-        saveLocal: {
-            type: Function
-        }
     },
 })
 Vue.component('create_card', {
