@@ -110,14 +110,14 @@ Vue.component('Columns1', {
                 <span>
                     <li v-for="task in card.arrTask" v-if="task.title != null" >
                             <strong>{{task.id}}</strong>
-                            <div  
+                            <input  
                             
                             :disabled="task.completed" 
                             @click="updateColumn(card, task)"
-                            
+                            class="checkbox" type="checkbox"
                             >
                             <span :class="{done: task.completed}" >{{task.title}}</span>
-                            </div>
+                            </input>
                     </li>
                 </span>
             </div>
@@ -163,12 +163,13 @@ Vue.component('Columns2', {
                 <span>
                     <li v-for="task in card.arrTask" v-if="task.title != null" >
                             <strong>{{task.id}}</strong>
-                            <div
+                            <input
                             :disabled="task.completed" 
                             @click="updateColumnTwo(card, task)"
+                            class="checkbox" type="checkbox"
                             >
                             <span :class="{done: task.completed}" >{{task.title}}</span>
-                            </div>
+                            </input>
                     </li>
                 </span>
             </div>
@@ -206,11 +207,13 @@ Vue.component('Columns3', {
                 <span>
                     <li v-for="task in card.arrTask" v-if="task.title != null" >
                             <strong>{{task.id}}</strong>
-                            <div
+                            <input
                             :disabled="task.completed" 
+                            @click="updateColumnTrird(card, task)"
+                            class="checkbox" type="checkbox"
                             >
                             <span :class="{done: task.completed}" >{{task.title}}</span>
-                            </div>
+                            </input>
                     </li>
                     <p>Дата окончания: <br>{{card.data}}</p>
                     
